@@ -113,6 +113,19 @@ gs=gridspec.GridSpec(3,4)
 
 # 3D motion
 ax0=fig.add_subplot(gs[:,0:3],projection='3d',facecolor=(0.9,0.9,0.9))
+
+# Create 3D arrows
+
+# Arrow z
+x_arr_up=0
+y_arr_up=0
+z_arr_up=z
+dx=0
+dy=0
+dz=2
+
+quiver_z=ax0.quiver(x_arr_up,y_arr_up,z_arr_up[0],dx,dy,dz,color='r',arrow_length_ratio=0.15)
+
 plane_trajectory,=ax0.plot([],[],[],'r',linewidth=1,label='Flight trajectory')
 drone_body_x,=ax0.plot([],[],[],'b',linewidth=5,label='drone_x')
 drone_body_y,=ax0.plot([],[],[],'g',linewidth=5,label='drone_y')
@@ -147,13 +160,13 @@ plt.ylabel('position_z [m]',fontsize=12)
 plt.grid(True)
 
 drone_ani=animation.FuncAnimation(fig,update_plot,
-    frames=frame_amount,interval=20,repeat=False,blit=True)
-#plt.show()
+    frames=frame_amount,interval=20,repeat=False,blit=False)
+plt.show()
 
 # Matplotlib 3.3.3 needed
-Writer=animation.writers['ffmpeg']
-writer=Writer(fps=30,metadata={'artist': 'Me'},bitrate=1800)
-drone_ani.save('drone_ani.mp4',writer)
+# Writer=animation.writers['ffmpeg']
+# writer=Writer(fps=30,metadata={'artist': 'Me'},bitrate=1800)
+# drone_ani.save('drone_ani.mp4',writer)
 
 
 
@@ -161,13 +174,3 @@ drone_ani.save('drone_ani.mp4',writer)
 
 
 
-
-
-
-
-
-
-
-
-
-###########################
