@@ -7,11 +7,11 @@ import numpy as np
 
 #print(matplotlib.__version__)
 
-type=5
+type=4
 
 # Create the time array
 t0=0
-t_end=10
+t_end=2
 dt=0.02
 t=np.arange(t0,t_end+dt,dt)
 
@@ -118,12 +118,7 @@ drone_body_x,=ax0.plot([],[],[],'b',linewidth=5,label='drone_x')
 drone_body_y,=ax0.plot([],[],[],'g',linewidth=5,label='drone_y')
 ax0.set_xlim(-3,3)
 ax0.set_ylim(-3,3)
-# ax0.set_xlim(min(x),max(x))
-# ax0.set_ylim(min(y),max(y))
 ax0.set_zlim(min(z),max(z))
-# ax0.set_xticks([0])
-# ax0.set_yticks([0])
-# ax0.set_zticks([5])
 ax0.set_xlabel('position_x [m]',fontsize=12)
 ax0.set_ylabel('position_y [m]',fontsize=12)
 ax0.set_zlabel('position_z [m]',fontsize=12)
@@ -133,7 +128,6 @@ ax1=fig.add_subplot(gs[0,3],facecolor=(0.9,0.9,0.9))
 pos_x,=ax1.plot([],[],'b',linewidth=2,label='x = '+str(r)+'cos(2π'+str(f)+'t)')
 plt.xlim(t0,t_end)
 plt.ylim(-3,3)
-# plt.ylim(min(x),max(x))
 plt.ylabel('position_x [m]',fontsize=12)
 plt.grid(True)
 
@@ -141,7 +135,6 @@ ax2=fig.add_subplot(gs[1,3],facecolor=(0.9,0.9,0.9))
 pos_y,=ax2.plot([],[],'b',linewidth=2,label='y = '+str(r)+'sin(2π'+str(f)+'t)')
 plt.xlim(t0,t_end)
 plt.ylim(-3,3)
-# plt.ylim(min(y),max(y))
 plt.ylabel('position_y [m]',fontsize=12)
 plt.grid(True)
 
@@ -149,17 +142,18 @@ ax3=fig.add_subplot(gs[2,3],facecolor=(0.9,0.9,0.9))
 pos_z,=ax3.plot([],[],'b',linewidth=2,label='z = t')
 plt.xlim(t0,t_end)
 plt.ylim(-3,3)
-# plt.ylim(min(z),max(z))
 plt.xlabel('time [s]',fontsize=12)
 plt.ylabel('position_z [m]',fontsize=12)
 plt.grid(True)
 
-plane_ani=animation.FuncAnimation(fig,update_plot,
+drone_ani=animation.FuncAnimation(fig,update_plot,
     frames=frame_amount,interval=20,repeat=False,blit=True)
-plt.show()
+#plt.show()
 
-
-
+# Matplotlib 3.3.3 needed
+Writer=animation.writers['ffmpeg']
+writer=Writer(fps=30,metadata={'artist': 'Me'},bitrate=1800)
+drone_ani.save('drone_ani.mp4',writer)
 
 
 
