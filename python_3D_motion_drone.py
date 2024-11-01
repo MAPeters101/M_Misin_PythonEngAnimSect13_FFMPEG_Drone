@@ -11,7 +11,7 @@ type=4
 
 # Create the time array
 t0=0
-t_end=2
+t_end=10
 dt=0.02
 t=np.arange(t0,t_end+dt,dt)
 
@@ -56,6 +56,9 @@ elif type==5:
 frame_amount=len(t)
 
 def update_plot(num):
+    global quiver_z
+    quiver_z.remove()
+    quiver_z=ax0.quiver(*(x_arr_up,y_arr_up,z_arr_up[num],dx,dy,dz),color='r',arrow_length_ratio=0.15)
     # Trajectory
     # plane_trajectory.set_data(x[0:num],y[0:num])
     plane_trajectory.set_xdata(x[0:num])
@@ -105,7 +108,8 @@ def update_plot(num):
         drone_body_y.set_ydata([y[num]-r[num]*np.sin(2*np.pi*(f[num])*t[num]+np.pi/2),y[num]+r[num]*np.sin(2*np.pi*(f[num])*t[num]+np.pi/2)])
         drone_body_y.set_3d_properties([z[num],z[num]])
 
-    return plane_trajectory,pos_x,pos_y,pos_z,drone_body_x,drone_body_y
+    return plane_trajectory,pos_x,pos_y,pos_z,drone_body_x,drone_body_y, \
+        quiver_z
 
 # Set up your figure properties
 fig=plt.figure(figsize=(16,9),dpi=80,facecolor=(0.8,0.8,0.8))
@@ -124,7 +128,7 @@ dx=0
 dy=0
 dz=2
 
-quiver_z=ax0.quiver(x_arr_up,y_arr_up,z_arr_up[0],dx,dy,dz,color='r',arrow_length_ratio=0.15)
+quiver_z=ax0.quiver(*(x_arr_up,y_arr_up,z_arr_up[0],dx,dy,dz),color='r',arrow_length_ratio=0.15)
 
 plane_trajectory,=ax0.plot([],[],[],'r',linewidth=1,label='Flight trajectory')
 drone_body_x,=ax0.plot([],[],[],'b',linewidth=5,label='drone_x')
