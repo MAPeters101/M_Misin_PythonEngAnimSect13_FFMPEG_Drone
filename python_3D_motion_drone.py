@@ -6,7 +6,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 #print(matplotlib.__version__)
-
+# The arrows currently only work with type = 4
 type=4
 
 # Create the time array
@@ -68,8 +68,8 @@ def update_plot(num):
     quiver_y=ax0.quiver(*get_arrow(num,np.pi/2),color='g',arrow_length_ratio=0.15)
     quiver_z=ax0.quiver(*(x_arr_up,y_arr_up,z_arr_up[num],dx,dy,dz),color='r',arrow_length_ratio=0.15)
 
-    arrow_text_x=ax0.text(get_arrow(num,0)[0]*3.2,get_arrow(num,0)[1]*3.2,z[0],'x',fontsize=11,color='b')
-    arrow_text_y=ax0.text(get_arrow(num,np.pi/2)[0]*3.2,get_arrow(num,np.pi/2)[1]*3.2,z[0],'y',fontsize=11,color='g')
+    arrow_text_x=ax0.text(get_arrow(num,0)[0]*3.2,get_arrow(num,0)[1]*3.2,z[num],'x',fontsize=11,color='b')
+    arrow_text_y=ax0.text(get_arrow(num,np.pi/2)[0]*3.2,get_arrow(num,np.pi/2)[1]*3.2,z[num],'y',fontsize=11,color='g')
     arrow_text_z=ax0.text(0,0,1.2*dz+z[num],'z',fontsize=11,color='r')
 
     # Trajectory
@@ -195,12 +195,12 @@ plt.grid(True)
 
 drone_ani=animation.FuncAnimation(fig,update_plot,
     frames=frame_amount,interval=20,repeat=False,blit=False)
-plt.show()
+#plt.show()
 
 # Matplotlib 3.3.3 needed
-# Writer=animation.writers['ffmpeg']
-# writer=Writer(fps=30,metadata={'artist': 'Me'},bitrate=1800)
-# drone_ani.save('drone_ani.mp4',writer)
+Writer=animation.writers['ffmpeg']
+writer=Writer(fps=30,metadata={'artist': 'Me'},bitrate=1800)
+drone_ani.save('drone_ani.mp4',writer)
 
 
 
