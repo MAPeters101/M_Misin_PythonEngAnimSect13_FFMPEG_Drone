@@ -56,17 +56,20 @@ elif type==5:
 frame_amount=len(t)
 
 def update_plot(num):
-    global quiver_x,quiver_y,quiver_z,arrow_text_z
+    global quiver_x,quiver_y,quiver_z,arrow_text_x,arrow_text_y,arrow_text_z
     quiver_x.remove()
     quiver_y.remove()
     quiver_z.remove()
+    arrow_text_x.remove()
+    arrow_text_y.remove()
     arrow_text_z.remove()
 
     quiver_x=ax0.quiver(*get_arrow(num,0),color='b',arrow_length_ratio=0.15)
-    quiver_y=ax0.quiver(*get_arrow(num,np.pi/2),color='g',
-                          arrow_length_ratio=0.15)
-
+    quiver_y=ax0.quiver(*get_arrow(num,np.pi/2),color='g',arrow_length_ratio=0.15)
     quiver_z=ax0.quiver(*(x_arr_up,y_arr_up,z_arr_up[num],dx,dy,dz),color='r',arrow_length_ratio=0.15)
+
+    arrow_text_x=ax0.text(get_arrow(num,0)[0]*3.2,get_arrow(num,0)[1]*3.2,z[0],'x',fontsize=11,color='b')
+    arrow_text_y=ax0.text(get_arrow(num,np.pi/2)[0]*3.2,get_arrow(num,np.pi/2)[1]*3.2,z[0],'y',fontsize=11,color='g')
     arrow_text_z=ax0.text(0,0,1.2*dz+z[num],'z',fontsize=11,color='r')
 
     # Trajectory
@@ -119,7 +122,7 @@ def update_plot(num):
         drone_body_y.set_3d_properties([z[num],z[num]])
 
     return plane_trajectory,pos_x,pos_y,pos_z,drone_body_x,drone_body_y, \
-        quiver_x,quiver_y,quiver_z,arrow_text_z
+        quiver_x,quiver_y,quiver_z,arrow_text_x,arrow_text_y,arrow_text_z
 
 # Set up your figure properties
 fig=plt.figure(figsize=(16,9),dpi=80,facecolor=(0.8,0.8,0.8))
@@ -142,7 +145,8 @@ def get_arrow(i,n):
 quiver_x=ax0.quiver(*get_arrow(0,0),color='b',arrow_length_ratio=0.15)
 quiver_y=ax0.quiver(*get_arrow(0,np.pi/2),color='g',arrow_length_ratio=0.15)
 
-#arrow_text_z=ax0.text(0,0,1.2*dz+z[0],'z',fontsize=11,color='r')
+arrow_text_x=ax0.text(get_arrow(0,0)[0]*3.2,get_arrow(0,0)[1]*3.2,z[0],'x',fontsize=11,color='b')
+arrow_text_y=ax0.text(get_arrow(0,np.pi/2)[0]*3.2,get_arrow(0,np.pi/2)[1]*3.2,z[0],'y',fontsize=11,color='g')
 
 
 # Arrow z
